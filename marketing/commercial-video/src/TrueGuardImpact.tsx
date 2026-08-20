@@ -183,91 +183,148 @@ const ColdOpen: React.FC<{ duration: number }> = ({ duration }) => {
   );
 };
 
-const ZoomCase: React.FC<{ duration: number }> = ({ duration }) => {
+const NewsMontage: React.FC<{ duration: number }> = ({ duration }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const card = spring({ frame: frame - 6, fps, config: { damping: 17, stiffness: 140, mass: 0.8 } });
-  const stamp = spring({ frame: frame - 38, fps, config: { damping: 13, stiffness: 175, mass: 0.65 } });
-  const swap = enter(frame, 72, 14);
+  const stories = [
+    {
+      from: 0,
+      to: 44,
+      src: "trueguard-impact-news-bloomberg.png",
+      code: "01 / WRONG COMPANY",
+      source: "BLOOMBERG LAW · MARCH 26, 2020",
+      accent: C.red,
+    },
+    {
+      from: 44,
+      to: 64,
+      src: "trueguard-impact-news-sec.png",
+      code: "OFFICIAL RECORD",
+      source: "U.S. SEC · TRADING SUSPENSIONS",
+      accent: C.red,
+    },
+    {
+      from: 64,
+      to: 122,
+      src: "trueguard-impact-news-techcrunch.png",
+      code: "02 / TOKEN IS NOT EQUITY",
+      source: "TECHCRUNCH · JULY 2, 2025",
+      accent: C.mint,
+    },
+    {
+      from: 122,
+      to: duration,
+      src: "trueguard-impact-news-cointelegraph.png",
+      code: "03 / LIQUIDITY FRAGMENTS",
+      source: "COINTELEGRAPH · MAY 22, 2026",
+      accent: C.amber,
+    },
+  ] as const;
+  const story = stories.find((item) => frame >= item.from && frame < item.to) ?? stories[stories.length - 1];
+  const local = frame - story.from;
+  const reveal = enter(local, 0, 7);
+  const stamp = spring({ frame: frame - 18, fps, config: { damping: 12, stiffness: 180, mass: 0.6 } });
+  const warningScan = interpolate(frame, [12, 42], [-8, 108], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const flash = interpolate(local, [0, 1, 4], [0.94, 0.32, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
   return (
-    <AbsoluteFill style={{ background: C.paper, opacity: sceneOpacity(frame, duration, 8), overflow: "hidden" }}>
-      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 68% 35%, rgba(255,77,91,.13), transparent 42%)" }} />
+    <AbsoluteFill style={{ background: C.black, opacity: sceneOpacity(frame, duration, 4), overflow: "hidden" }}>
+      <Img
+        src={staticFile(story.src)}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "center top",
+          opacity: 0.28,
+          filter: "blur(34px) saturate(.75) brightness(.65)",
+          transform: "scale(1.16)",
+        }}
+      />
+      <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(3,8,6,.3), rgba(3,8,6,.78))" }} />
       <div
         style={{
           position: "absolute",
           left: 105,
-          top: 105,
-          width: 590,
-          height: 780,
-          padding: 20,
+          right: 105,
+          top: 64,
+          height: 900,
+          overflow: "hidden",
           borderRadius: 24,
-          background: C.white,
-          boxShadow: "0 45px 110px rgba(8,16,12,.23)",
-          transform: `translateY(${(1 - card) * 80}px) rotate(${-3 + (1 - card) * -8}deg)`,
-          opacity: card,
+          border: `1px solid ${story.accent}66`,
+          background: C.paper,
+          boxShadow: "0 44px 120px rgba(0,0,0,.48)",
+          transform: `translateY(${(1 - reveal) * 38}px) scale(${0.985 + reveal * 0.015 + local * 0.00018})`,
+          opacity: reveal,
         }}
       >
-        <Img src={staticFile("trueguard-impact-sec-zoom-order.png")} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 13 }} />
-        <div
-          style={{
-            position: "absolute",
-            left: 78,
-            right: 62,
-            top: 373,
-            height: 87,
-            border: `5px solid ${C.red}`,
-            background: "rgba(255,77,91,.08)",
-          }}
+        <Img
+          src={staticFile(story.src)}
+          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
         />
-        <div
-          style={{
-            position: "absolute",
-            right: -55,
-            top: 82,
-            padding: "18px 28px",
-            border: `5px solid ${C.red}`,
-            color: C.red,
-            font: `900 28px ${mono}`,
-            letterSpacing: ".08em",
-            transform: `rotate(-8deg) scale(${stamp})`,
-            background: "rgba(255,255,255,.86)",
-          }}
-        >
-          SUSPENDED
-        </div>
+        <div style={{ position: "absolute", inset: 0, boxShadow: "inset 0 -120px 110px rgba(3,8,6,.2)" }} />
+        {frame < 64 && (
+          <>
+            <div
+              style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                top: `${warningScan}%`,
+                height: 5,
+                background: C.red,
+                boxShadow: "0 0 24px 8px rgba(255,77,91,.5)",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                right: 82,
+                top: 610,
+                padding: "20px 34px",
+                border: `6px solid ${C.red}`,
+                color: C.red,
+                background: "rgba(255,255,255,.9)",
+                font: `900 35px ${mono}`,
+                letterSpacing: ".1em",
+                transform: `rotate(-7deg) scale(${stamp})`,
+                boxShadow: "0 12px 35px rgba(255,77,91,.18)",
+              }}
+            >
+              SUSPENDED
+            </div>
+          </>
+        )}
       </div>
-
-      <div style={{ position: "absolute", left: 810, top: 180, right: 90 }}>
-        <SectionCode>REAL CASE / SEC / 2020</SectionCode>
-        <div style={{ font: `850 76px/.96 ${sans}`, letterSpacing: "-.06em", color: C.ink }}>
-          One familiar name.<br /><span style={{ color: C.red }}>The wrong company.</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 26, marginTop: 66 }}>
-          <div
-            style={{
-              width: 230,
-              borderRadius: 22,
-              padding: "28px 30px",
-              background: C.ink,
-              color: C.white,
-              transform: `translateX(${swap * -10}px)`,
-            }}
-          >
-            <div style={{ font: `800 48px ${mono}` }}>ZOOM</div>
-            <div style={{ marginTop: 8, color: C.red, font: `700 13px ${mono}` }}>ZOOM TECHNOLOGIES</div>
-          </div>
-          <div style={{ color: C.red, font: `900 54px ${sans}`, transform: `scale(${0.8 + swap * 0.2})` }}>≠</div>
-          <div style={{ width: 230, border: `1px solid rgba(7,21,14,.2)`, borderRadius: 22, padding: "28px 30px", background: C.white }}>
-            <div style={{ font: `800 48px ${mono}`, color: C.ink }}>ZM</div>
-            <div style={{ marginTop: 8, color: C.green, font: `700 13px ${mono}` }}>ZOOM VIDEO</div>
-          </div>
-        </div>
-        <div style={{ marginTop: 34, maxWidth: 720, color: "#59635D", font: `530 21px/1.45 ${sans}` }}>
-          The SEC cited concerns that investors were confusing two similarly named issuers.
-        </div>
+      <div
+        style={{
+          position: "absolute",
+          left: 128,
+          bottom: 72,
+          zIndex: 10,
+          display: "flex",
+          alignItems: "center",
+          gap: 16,
+          padding: "13px 18px",
+          borderRadius: 999,
+          background: "rgba(3,8,6,.9)",
+          border: `1px solid ${story.accent}88`,
+          color: story.accent,
+          font: `760 13px ${mono}`,
+          letterSpacing: ".11em",
+        }}
+      >
+        {story.code}
       </div>
-      <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 10, background: C.red }} />
-      <SourceTag right dark>Source: U.S. SEC Order 34-88477 · March 25, 2020</SourceTag>
+      <div style={{ position: "absolute", right: 128, bottom: 84, zIndex: 10, color: C.white, font: `700 12px ${mono}`, letterSpacing: ".08em" }}>
+        {story.source}
+      </div>
+      <AbsoluteFill style={{ zIndex: 30, background: C.white, opacity: flash, pointerEvents: "none" }} />
+      <ImpactNoise />
+      <Scanlines />
     </AbsoluteFill>
   );
 };
@@ -557,10 +614,10 @@ const ExitTogetherScene: React.FC<{ duration: number }> = ({ duration }) => {
   const { fps } = useVideoConfig();
   const merge = spring({ frame: frame - 34, fps, config: { damping: 18, stiffness: 110, mass: 0.85 } });
   const holders = [
-    { value: "$900", x: 140, y: 260 },
-    { value: "$1,350", x: 140, y: 470 },
-    { value: "$1,100", x: 430, y: 260 },
-    { value: "$1,650", x: 430, y: 470 },
+    { value: "$900", x: 140, y: 390 },
+    { value: "$1,350", x: 140, y: 570 },
+    { value: "$1,100", x: 430, y: 390 },
+    { value: "$1,650", x: 430, y: 570 },
   ];
   const targetX = 930;
   const targetY = 365;
@@ -697,16 +754,22 @@ const ImpactSoundtrack: React.FC = () => (
         <Audio src={staticFile("trueguard-impact-glitch.wav")} volume={0.38} />
       </Sequence>
     ))}
+    {[72, 116, 136, 194].map((from, index) => (
+      <Sequence key={`news-click-${from}`} from={from} durationInFrames={5}>
+        <Audio src={staticFile("trueguard-impact-click.wav")} volume={index === 1 ? 0.48 : 0.72} />
+      </Sequence>
+    ))}
   </>
 );
 
 const captionSegments = [
   [9, 47, "Markets move in seconds."],
   [48, 78, "Hype moves faster."],
-  [79, 156, "In 2020, the SEC suspended ZOOM"],
-  [157, 251, "after raising concerns that investors were confusing it with a similarly named company."],
-  [252, 380, "Today, real-world assets are moving onchain, and a familiar name can hide a bigger difference."],
-  [381, 493, "A product can track a price without giving you ownership, voting rights, or redemption."],
+  [79, 146, "The SEC suspended ZOOM after investors confused it with Zoom Video."],
+  [147, 205, "OpenAI warned that Robinhood’s tokens were not OpenAI equity."],
+  [206, 270, "Researchers warn that tokenized stocks can fragment liquidity."],
+  [271, 380, "Familiar names can hide very different products."],
+  [381, 493, "A token can track a price without giving you ownership, voting rights, or redemption."],
   [494, 597, "TrueGuard checks the real asset, the token rights, and what the user actually wants."],
   [598, 660, "Then it links every important answer to proof."],
   [661, 726, "And when small holders of the same token want to sell,"],
@@ -750,24 +813,7 @@ const Captions: React.FC = () => {
   );
 };
 
-export const TrueGuardImpact: React.FC = () => (
-  <AbsoluteFill style={{ background: C.black }}>
-    <ImpactSoundtrack />
-    <Sequence from={0} durationInFrames={84}><ColdOpen duration={84} /></Sequence>
-    <Sequence from={72} durationInFrames={184}><ZoomCase duration={184} /></Sequence>
-    <Sequence from={244} durationInFrames={144}><ProductNameScene duration={144} /></Sequence>
-    <Sequence from={373} durationInFrames={129}><RightsScene duration={129} /></Sequence>
-    <Sequence from={486} durationInFrames={124}><TrueGuardScan duration={124} /></Sequence>
-    <Sequence from={590} durationInFrames={80}><ProofScene duration={80} /></Sequence>
-    <Sequence from={653} durationInFrames={99}><LiquidityScene duration={99} /></Sequence>
-    <Sequence from={728} durationInFrames={157}><ExitTogetherScene duration={157} /></Sequence>
-    <Sequence from={865} durationInFrames={95}><EndScene duration={95} /></Sequence>
-    <Captions />
-    <GlobalFlash />
-  </AbsoluteFill>
-);
-
-export const TrueGuardImpactCover: React.FC = () => (
+const ImpactCoverFrame: React.FC = () => (
   <AbsoluteFill style={{ background: C.black, overflow: "hidden" }}>
     <Img src={staticFile("trueguard-impact-newsroom.png")} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.58 }} />
     <AbsoluteFill style={{ background: "linear-gradient(90deg, rgba(3,8,6,.96), rgba(3,8,6,.4), rgba(3,8,6,.72))" }} />
@@ -781,3 +827,23 @@ export const TrueGuardImpactCover: React.FC = () => (
     <ImpactNoise />
   </AbsoluteFill>
 );
+
+export const TrueGuardImpact: React.FC = () => (
+  <AbsoluteFill style={{ background: C.black }}>
+    <ImpactSoundtrack />
+    <Sequence from={0} durationInFrames={84}><ColdOpen duration={84} /></Sequence>
+    <Sequence from={72} durationInFrames={184}><NewsMontage duration={184} /></Sequence>
+    <Sequence from={244} durationInFrames={144}><ProductNameScene duration={144} /></Sequence>
+    <Sequence from={373} durationInFrames={129}><RightsScene duration={129} /></Sequence>
+    <Sequence from={486} durationInFrames={124}><TrueGuardScan duration={124} /></Sequence>
+    <Sequence from={590} durationInFrames={80}><ProofScene duration={80} /></Sequence>
+    <Sequence from={653} durationInFrames={99}><LiquidityScene duration={99} /></Sequence>
+    <Sequence from={728} durationInFrames={157}><ExitTogetherScene duration={157} /></Sequence>
+    <Sequence from={865} durationInFrames={95}><EndScene duration={95} /></Sequence>
+    <Captions />
+    <GlobalFlash />
+    <Sequence from={0} durationInFrames={3}><ImpactCoverFrame /></Sequence>
+  </AbsoluteFill>
+);
+
+export const TrueGuardImpactCover: React.FC = ImpactCoverFrame;
