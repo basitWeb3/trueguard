@@ -48,6 +48,62 @@ const Noise: React.FC = () => (
   />
 );
 
+const CoverFlash: React.FC<{ vertical?: boolean }> = ({ vertical = false }) => (
+  <AbsoluteFill
+    style={{
+      zIndex: 100,
+      background: C.dark,
+      color: C.white,
+      display: "grid",
+      placeItems: "center",
+      overflow: "hidden",
+    }}
+  >
+    <DotGrid dark />
+    <div
+      style={{
+        position: "absolute",
+        width: vertical ? 980 : 1500,
+        height: vertical ? 980 : 900,
+        borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(103,231,160,.22), transparent 67%)",
+        filter: "blur(20px)",
+      }}
+    />
+    <div style={{ position: "relative", textAlign: "center", padding: 60 }}>
+      <div
+        style={{
+          width: vertical ? 108 : 92,
+          height: vertical ? 108 : 92,
+          margin: "0 auto 28px",
+          borderRadius: 26,
+          display: "grid",
+          placeItems: "center",
+          background: C.mint,
+          color: C.dark,
+          font: `800 ${vertical ? 50 : 43}px ${sans}`,
+          boxShadow: "0 0 90px rgba(103,231,160,.26)",
+        }}
+      >
+        T
+      </div>
+      <div style={{ font: `760 ${vertical ? 78 : 74}px/1 ${sans}`, letterSpacing: "-.05em" }}>TrueGuard</div>
+      <div
+        style={{
+          marginTop: 22,
+          color: C.mint,
+          font: `700 ${vertical ? 20 : 17}px ${mono}`,
+          letterSpacing: ".15em",
+          textTransform: "uppercase",
+        }}
+      >
+        The RWA understanding layer
+      </div>
+    </div>
+    <Noise />
+  </AbsoluteFill>
+);
+
 const Brand: React.FC<{ light?: boolean }> = ({ light = false }) => (
   <div
     style={{
@@ -644,31 +700,48 @@ const EndScene: React.FC<{ duration: number; vertical?: boolean }> = ({ duration
   );
 };
 
-const Soundtrack: React.FC<{ voice?: "landscape" | "vertical" }> = ({ voice = "landscape" }) => (
-  <>
-    <Audio src={staticFile("trueguard-ambient.wav")} volume={0.52} />
-    <Sequence from={voice === "vertical" ? 10 : 36}>
+const Soundtrack: React.FC<{ voice?: "landscape" | "vertical" }> = ({ voice = "landscape" }) => {
+  const vertical = voice === "vertical";
+  return (
+    <>
+      <Audio
+        src={staticFile("trueguard-music.wav")}
+        volume={(frame) =>
+          vertical
+            ? interpolate(frame, [0, 8, 28, 325, 359], [0.3, 0.26, 0.15, 0.15, 0.3], {
+                extrapolateLeft: "clamp",
+                extrapolateRight: "clamp",
+              })
+            : interpolate(frame, [0, 18, 42, 675, 719], [0.3, 0.26, 0.16, 0.16, 0.31], {
+                extrapolateLeft: "clamp",
+                extrapolateRight: "clamp",
+              })
+        }
+      />
+      <Sequence from={vertical ? 8 : 18}>
       <Audio src={staticFile(voice === "vertical" ? "trueguard-voiceover-vertical.wav" : "trueguard-voiceover.wav")} volume={1} />
-    </Sequence>
-    {[82, 190, 333, 438, 514, 603].map((from) => (
-      <Sequence key={from} from={from} durationInFrames={12}>
-        <Audio src={staticFile("trueguard-click.wav")} volume={0.38} />
       </Sequence>
-    ))}
-  </>
-);
+      {(vertical ? [80, 172, 280] : [82, 190, 333, 438, 514, 603]).map((from) => (
+        <Sequence key={from} from={from} durationInFrames={12}>
+          <Audio src={staticFile("trueguard-click.wav")} volume={0.32} />
+        </Sequence>
+      ))}
+    </>
+  );
+};
 
 const subtitleSegments = [
-  [36, 105, "RWA buyers often know the story."],
-  [106, 175, "But not always what the token gives them."],
-  [176, 257, "TrueGuard connects the real asset to the onchain product,"],
-  [258, 304, "checks what the user wants,"],
-  [305, 370, "and links every important claim to proof."],
-  [371, 436, "When matching small holders want to sell,"],
-  [437, 518, "ExitTogether pools their orders to seek one large-order quote,"],
-  [519, 574, "while every holder keeps a minimum."],
-  [575, 589, "TrueGuard."],
-  [590, 642, "Understand it. Verify it. Exit together."],
+  [19, 109, "People often know the story behind a real-world asset."],
+  [110, 164, "But not what the token actually gives them."],
+  [165, 256, "TrueGuard connects the real asset to the onchain product."],
+  [257, 364, "It checks what the user wants, and links every important claim to proof."],
+  [365, 446, "And when matching small holders want to sell,"],
+  [447, 548, "ExitTogether pools their orders to seek one large-order quote,"],
+  [549, 590, "while each holder keeps a minimum."],
+  [591, 614, "TrueGuard."],
+  [615, 641, "Understand it."],
+  [642, 669, "Verify it."],
+  [670, 701, "Exit together."],
 ] as const;
 
 const SubtitleTrack: React.FC = () => {
@@ -714,6 +787,7 @@ export const TrueGuardCommercial: React.FC = () => (
     <Sequence from={444} durationInFrames={180}><ExitScene duration={180} /></Sequence>
     <Sequence from={612} durationInFrames={108}><EndScene duration={108} /></Sequence>
     <SubtitleTrack />
+    <Sequence from={0} durationInFrames={3}><CoverFlash /></Sequence>
   </AbsoluteFill>
 );
 
@@ -724,6 +798,7 @@ export const TrueGuardVertical: React.FC = () => (
     <Sequence from={80} durationInFrames={104}><IntentScene duration={104} vertical /></Sequence>
     <Sequence from={172} durationInFrames={120}><ExitScene duration={120} vertical /></Sequence>
     <Sequence from={280} durationInFrames={80}><EndScene duration={80} vertical /></Sequence>
+    <Sequence from={0} durationInFrames={3}><CoverFlash vertical /></Sequence>
   </AbsoluteFill>
 );
 

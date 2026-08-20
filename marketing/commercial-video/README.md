@@ -6,6 +6,8 @@ This is the editable, code-based motion system for the TrueGuard product commerc
 
 - `out/trueguard-commercial-30s-16x9.mp4` — 1920×1080, 24 fps, narrated master.
 - `out/trueguard-commercial-15s-9x16.mp4` — 1080×1920, 24 fps, narrated social cut.
+- `out/trueguard-commercial-cover-16x9.png` — landscape upload cover.
+- `out/trueguard-commercial-cover-9x16.png` — vertical upload cover.
 - `out/trueguard-commercial-poster.png` — 1920×1080 campaign poster.
 - `../trueguard_commercial_animation.html` — self-contained interactive storyboard.
 
@@ -15,6 +17,7 @@ From the repository root:
 
 ```bash
 pnpm install
+python3 -m pip install edge-tts
 cd marketing/commercial-video
 bash scripts/generate-audio.sh
 pnpm render:landscape
@@ -22,7 +25,7 @@ pnpm render:vertical
 pnpm still
 ```
 
-The narration uses the local macOS Samantha voice. The ambient bed and transition tone are synthesized locally, so the edit has no third-party music dependency.
+The narration uses Microsoft's Andrew multilingual neural voice through `edge-tts`. The original 96 BPM music bed and transition tone are generated locally from the included scripts, so the edit has no third-party music dependency. The opening brand cover lasts three frames (0.125 seconds at 24 fps).
 
 ## Story
 
