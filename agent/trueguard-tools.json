@@ -1,0 +1,49 @@
+{
+  "name": "trueguard",
+  "description": "Understand an RWA, verify product rights against user intent, and help small holders pool compatible exits.",
+  "version": "1.0.0",
+  "tools": [
+    {
+      "name": "trueguard_explain_asset",
+      "description": "Explain the real asset, separate live operations from future claims, and return cited evidence.",
+      "method": "GET",
+      "path": "/v1/assets/{assetId}",
+      "input_schema": { "type": "object", "properties": { "assetId": { "type": "string", "enum": ["spacex", "tesla", "gold"] } }, "required": ["assetId"] }
+    },
+    {
+      "name": "trueguard_check_intent",
+      "description": "Deterministically compare a user's words with the exact rights of an RWA product.",
+      "method": "POST",
+      "path": "/v1/check-intent",
+      "input_schema": { "type": "object", "properties": { "intent": { "type": "string" }, "productId": { "type": "string", "enum": ["spcx-xperp", "tslax", "paxg"] } }, "required": ["intent", "productId"] }
+    },
+    {
+      "name": "trueguard_get_exit_routes",
+      "description": "Return exit routes, estimated net proceeds, assumptions, minimums and restrictions.",
+      "method": "POST",
+      "path": "/v1/exit-routes",
+      "input_schema": { "type": "object", "properties": { "productId": { "type": "string" }, "amountUsd": { "type": "number", "minimum": 0 } }, "required": ["productId", "amountUsd"] }
+    },
+    {
+      "name": "trueguard_quote_exit_together",
+      "description": "Estimate how a small RWA sell order changes when it joins a compatible larger ExitTogether batch.",
+      "method": "POST",
+      "path": "/v1/exit-together/quote",
+      "input_schema": { "type": "object", "properties": { "productId": { "type": "string", "enum": ["spcx-xperp", "tslax", "paxg"] }, "amountUsd": { "type": "number", "minimum": 0 } }, "required": ["productId", "amountUsd"] }
+    },
+    {
+      "name": "trueguard_execution_providers",
+      "description": "Return execution-provider readiness, exact scope, requirements, limitations and primary sources without treating configured infrastructure as product eligibility.",
+      "method": "GET",
+      "path": "/v1/execution/providers",
+      "input_schema": { "type": "object", "properties": {} }
+    },
+    {
+      "name": "trueguard_get_onchain_batch",
+      "description": "Read the current ExitTogether batch state directly from the X Layer coordinator.",
+      "method": "GET",
+      "path": "/v1/exit-together/onchain/{batchId}",
+      "input_schema": { "type": "object", "properties": { "batchId": { "type": "integer", "minimum": 1 } }, "required": ["batchId"] }
+    }
+  ]
+}

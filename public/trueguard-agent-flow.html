@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>TrueGuard agent check</title>
+  <style>
+    :root{--bg:#0b120e;--panel:#111b15;--panel-2:#16231b;--line:rgba(255,255,255,.11);--ink:#e8f1eb;--muted:#829087;--green:#67e7a0;--red:#ff7a82;--yellow:#e8b95d;--ease:cubic-bezier(.23,1,.32,1)}
+    *{box-sizing:border-box}html,body{height:100%;margin:0}body{background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}.app{height:100vh;max-width:760px;margin:0 auto;display:flex;flex-direction:column;padding:20px}.top{flex-shrink:0;display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--line)}.mark{width:27px;height:27px;display:grid;place-items:center;border-radius:8px;background:var(--green);color:#07110b;font:700 11px ui-monospace,SFMono-Regular,monospace}.top-copy{display:grid;gap:2px}.top strong{font-size:11px}.top small{color:var(--muted);font-size:8px}.connection{margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--green);font:500 8px ui-monospace,SFMono-Regular,monospace}.connection i{width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 0 4px rgba(103,231,160,.08)}
+    .prompt{flex-shrink:0;margin-top:14px;padding:13px;border:1px solid var(--line);border-radius:11px;background:var(--panel)}.prompt span{color:var(--muted);font:500 7px ui-monospace,SFMono-Regular,monospace;letter-spacing:.08em}.prompt p{margin:7px 0 0;font-size:10px;line-height:1.45}.feed{flex:1;min-height:0;overflow-y:auto;padding:12px 0;display:flex;flex-direction:column;gap:6px;scrollbar-width:thin;scrollbar-color:#27352c transparent}.empty{margin:auto;text-align:center;color:var(--muted)}.empty svg{display:block;margin:0 auto 10px}.empty strong{display:block;color:var(--ink);font-size:11px}.empty small{display:block;margin-top:4px;font-size:8px}
+    .stage{opacity:0;transform:translateY(7px);border:1px solid var(--line);border-radius:10px;background:var(--panel);transition:opacity 220ms var(--ease),transform 220ms var(--ease),border-color 180ms ease}.stage.in{opacity:1;transform:none}.stage.active{border-color:rgba(103,231,160,.38)}.stage-head{width:100%;padding:10px 11px;display:grid;grid-template-columns:22px 1fr auto;align-items:center;gap:8px;border:0;background:transparent;color:inherit;text-align:left}.stage-head:disabled{cursor:default}.state{width:20px;height:20px;display:grid;place-items:center;border-radius:6px;background:#1c2b21;color:var(--muted);font:500 8px ui-monospace,SFMono-Regular,monospace}.active .state{color:var(--green)}.done .state{background:rgba(103,231,160,.12);color:var(--green)}.stage-copy{display:grid;gap:2px}.stage-copy strong{font-size:9px}.stage-copy small{color:var(--muted);font-size:7px}.stage-status{display:flex;align-items:center;gap:6px;color:var(--muted);font:500 7px ui-monospace,SFMono-Regular,monospace}.active .stage-status{color:var(--green)}.loader{width:11px;height:11px;border:1.5px solid rgba(103,231,160,.22);border-top-color:var(--green);border-radius:50%;animation:spin .65s linear infinite}.chevron{display:none;font-size:10px}.done .chevron{display:block}.detail{display:none;margin:0 11px 10px;padding:9px;border-radius:7px;background:#09100c;color:#8fa097;font:7px/1.65 ui-monospace,SFMono-Regular,monospace;white-space:pre-wrap}.stage.open .detail{display:block;animation:detail-in 180ms var(--ease)}
+    .result{opacity:0;transform:translateY(8px);padding:14px;border:1px solid rgba(255,122,130,.36);border-radius:11px;background:rgba(255,122,130,.06);transition:opacity 260ms var(--ease),transform 260ms var(--ease)}.result.in{opacity:1;transform:none}.result-top{display:flex;justify-content:space-between;align-items:center}.result-top span{color:var(--red);font:600 8px ui-monospace,SFMono-Regular,monospace;letter-spacing:.08em}.result-top small{color:var(--muted);font-size:7px}.result h2{margin:10px 0 5px;font-size:13px}.result p{margin:0;color:#b8c4bc;font-size:9px;line-height:1.5}.result-grid{margin-top:11px;display:grid;grid-template-columns:1fr 1fr;gap:6px}.result-grid div{padding:8px;border-radius:7px;background:rgba(0,0,0,.18)}.result-grid span{display:block;color:var(--muted);font-size:7px}.result-grid strong{display:block;margin-top:3px;font-size:8px}.result-grid .danger{color:var(--red)}
+    .controls{flex-shrink:0;padding-top:12px;border-top:1px solid var(--line);display:flex;gap:8px}.controls button{min-height:37px;padding:0 13px;border-radius:9px;font-size:9px;font-weight:700;cursor:pointer;transition:transform 140ms var(--ease),background 180ms ease,border-color 180ms ease}.controls button:active{transform:scale(.97)}.run{flex:1;border:0;background:var(--green);color:#07110b}.run:disabled{cursor:wait;opacity:.55}.replay{display:none;border:1px solid var(--line);background:var(--panel);color:var(--ink)}.replay.show{display:block}.timing{align-self:center;margin-left:auto;color:var(--muted);font:7px ui-monospace,SFMono-Regular,monospace}
+    @keyframes spin{to{transform:rotate(360deg)}}@keyframes detail-in{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+    @media(max-width:480px){.app{padding:12px}.prompt{margin-top:10px}.stage-head{padding:9px}.result-grid{grid-template-columns:1fr}.timing{display:none}.controls button{min-height:40px}.top small{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+    @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}.stage,.result{transform:none}}
+  </style>
+  <style>
+    :root{--muted:#a9b6ad}
+    .top strong{font-size:13px}.top small{color:#a9b6ad;font-size:9px;line-height:1.4}.connection{font-size:9px}
+    .prompt span{color:#a9b6ad;font-size:8px}.prompt p{font-size:11px;line-height:1.55}
+    .empty{color:#a9b6ad}.empty strong{font-size:13px}.empty small{margin-top:5px;font-size:9px;line-height:1.45}
+    .stage-copy strong{font-size:10px}.stage-copy small{color:#a9b6ad;font-size:8px;line-height:1.45}.stage-status{color:#a9b6ad;font-size:8px}
+    .detail{color:#b3c0b7;font-size:8px;line-height:1.7}
+    .result-top small{color:#a9b6ad;font-size:8px}.result p{color:#c8d2cb;font-size:10px;line-height:1.6}.result-grid span{color:#a9b6ad;font-size:8px}.result-grid strong{font-size:9px}
+    .controls button{font-size:10px}.timing{color:#a9b6ad;font-size:8px}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="top"><span class="mark">T</span><div class="top-copy"><strong>TrueGuard pre-trade check</strong><small>SPCXUSD X-Perp · X Layer research pack</small></div><span class="connection"><i></i>READY</span></header>
+    <section class="prompt"><span>AGENT REQUEST</span><p>“Buy $5,000 of SpaceX stock for the user.”</p></section>
+    <section class="feed" id="feed" aria-live="polite"><div class="empty" id="empty"><svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="15.5" stroke="#26372c"/><path d="M10 17h14M17 10v14" stroke="#67e7a0" stroke-linecap="round"/></svg><strong>Ready to inspect the trade</strong><small>Run the check to see every verification stage.</small></div></section>
+    <footer class="controls"><button class="run" id="run">Run TrueGuard</button><button class="replay" id="replay">Replay</button><span class="timing" id="timing">5 checks · deterministic</span></footer>
+  </main>
+  <script>
+    const stages=[
+      {name:'Resolve the exact product',wait:'Finding SPCXUSD X-Perp',done:'Expiry perpetual derivative',duration:420,detail:'product_id: spcx-xperp\nvenue: OKX\ntype: expiry perpetual derivative'},
+      {name:'Load the current research pack',wait:'Verifying evidence root',done:'6 official sources · current',duration:560,detail:'version: 1.0.0\ncoverage: 100%\npack: 0x8e1c21dae6306983…'},
+      {name:'Decode holder rights',wait:'Reading product terms',done:'No equity or shareholder rights',duration:460,detail:'owns_underlying: false\nvoting_rights: false\ndividend_rights: none\nleverage: up to 10x'},
+      {name:'Compare product with user intent',wait:'Matching requested rights',done:'Ownership request does not match',duration:520,detail:'requested: company ownership\nprovided: price exposure\nstatus: MISMATCH'},
+      {name:'Map the available exit',wait:'Checking route and restrictions',done:'Close position on venue',duration:390,detail:'route: close\nestimated_cost: 0.13%\nissuer_redemption: unavailable'}
+    ];
+    const feed=document.getElementById('feed'),run=document.getElementById('run'),replay=document.getElementById('replay'),empty=document.getElementById('empty'),timing=document.getElementById('timing');
+    let busy=false;
+    const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+    function scrollNow(){feed.scrollTop=feed.scrollHeight}
+    function scrollSmooth(){requestAnimationFrame(()=>requestAnimationFrame(()=>feed.scrollTo({top:feed.scrollHeight,behavior:'smooth'})))}
+    function stageNode(stage,index){
+      const el=document.createElement('article');el.className='stage active';
+      el.innerHTML='<button class="stage-head" disabled><span class="state">'+String(index+1).padStart(2,'0')+'</span><span class="stage-copy"><strong>'+stage.name+'</strong><small>'+stage.wait+'</small></span><span class="stage-status"><i class="loader"></i><b>RUNNING</b><i class="chevron">⌄</i></span></button><pre class="detail">'+stage.detail+'</pre>';
+      el.querySelector('.stage-head').addEventListener('click',()=>{if(el.classList.contains('done'))el.classList.toggle('open')});
+      return el;
+    }
+    async function execute(){
+      if(busy)return;busy=true;run.disabled=true;run.textContent='Checking…';replay.classList.remove('show');empty.remove();feed.replaceChildren();const started=performance.now();
+      for(let i=0;i<stages.length;i++){
+        const stage=stages[i],el=stageNode(stage,i);feed.appendChild(el);scrollNow();requestAnimationFrame(()=>el.classList.add('in'));await sleep(stage.duration);
+        el.classList.remove('active');el.classList.add('done');el.querySelector('.state').textContent='✓';el.querySelector('.stage-copy small').textContent=stage.done;el.querySelector('.stage-status b').textContent='DONE';el.querySelector('.loader').remove();el.querySelector('.stage-head').disabled=false;scrollNow();
+      }
+      const result=document.createElement('article');result.className='result';result.innerHTML='<div class="result-top"><span>EXECUTION BLOCKED</span><small>Intent check complete</small></div><h2>The product is not SpaceX stock.</h2><p>SPCXUSD gives price exposure through a derivative. It does not make the user a SpaceX shareholder.</p><div class="result-grid"><div><span>CHECK RESULT</span><strong class="danger">MISMATCH</strong></div><div><span>SAFE NEXT STEP</span><strong>Ask for explicit confirmation</strong></div></div>';feed.appendChild(result);requestAnimationFrame(()=>result.classList.add('in'));scrollSmooth();
+      const seconds=((performance.now()-started)/1000).toFixed(1);timing.textContent='5 checks · '+seconds+'s demo';run.style.display='none';replay.classList.add('show');busy=false;
+    }
+    function reset(){feed.replaceChildren();const nextEmpty=document.createElement('div');nextEmpty.className='empty';nextEmpty.innerHTML='<strong>Ready to run again</strong><small>The same inputs always return the same rights check.</small>';feed.appendChild(nextEmpty);run.style.display='block';run.disabled=false;run.textContent='Run TrueGuard';replay.classList.remove('show');timing.textContent='5 checks · deterministic'}
+    run.addEventListener('click',execute);replay.addEventListener('click',reset);
+  </script>
+</body>
+</html>

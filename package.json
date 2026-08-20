@@ -1,0 +1,45 @@
+{
+  "name": "trueguard",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "api": "tsx api/server.ts",
+    "api:dev": "tsx watch api/server.ts",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "sdk:build": "tsc -p packages/sdk/tsconfig.json",
+    "sdk:pack": "pnpm sdk:build && pnpm --dir packages/sdk pack --pack-destination ../..",
+    "typecheck": "tsc -p tsconfig.tools.json && tsc -b",
+    "test": "vitest run",
+    "contracts:compile": "node scripts/compile-contracts.mjs",
+    "contracts:deploy:xlayer": "tsx scripts/deploy-xlayer.ts",
+    "contracts:settle:xlayer": "tsx scripts/settle-exit-together.ts",
+    "contracts:publish:xlayer": "tsx scripts/publish-research.ts",
+    "verify": "pnpm typecheck && pnpm test && pnpm sdk:build && pnpm contracts:compile && pnpm build"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.1",
+    "@react-three/drei": "^10.7.6",
+    "@react-three/fiber": "^9.4.0",
+    "hono": "^4.13.2",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "three": "^0.183.2",
+    "viem": "^2.55.16"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^6.0.0",
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.183.1",
+    "@vitejs/plugin-react": "^5.1.4",
+    "solc": "^0.8.36",
+    "tsx": "^4.23.12",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vitest": "^4.1.10"
+  }
+}

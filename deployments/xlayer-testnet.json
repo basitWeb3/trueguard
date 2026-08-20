@@ -1,0 +1,15 @@
+{
+  "chainId": 1952,
+  "deployedAt": "2026-08-20T11:12:50.522Z",
+  "deployer": "0xe2557f1c0C2DAB83DD618168b08301Aa116651E2",
+  "researchPackRegistry": "0xbf78445d27a3d609fa7533394a2130cecc066e47",
+  "productIdentityRegistry": "0x0ccf8811aa58e62d904424b7baa1af97c7628dad",
+  "intentCheckRegistry": "0xce783006a1a685dcb917f71f52ce03168fc6b62b",
+  "executionGuard": "0xa9fa0ce38cc06e7f615ae868345898c30f6d315c",
+  "exitTogetherCoordinator": "0xc188009320233ec072853b99774ee32912430f70",
+  "demoRwaToken": "0x222fe6cead52aaa1cfe449e12104d59505c3cd4e",
+  "demoUsdToken": "0x8f435494fec55d127b117831f0261e023e601247",
+  "demoBatchId": 1,
+  "demoProductId": "0x7e301cbd491038cccab804d1b8a0e955063309ac1f49c374ee4d6e19334f91fa",
+  "demoNotice": "tgSPCX is a testnet reference token. It is not SpaceX equity and is not the OKX SPCXUSD X-Perp."
+}
