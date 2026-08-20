@@ -6,6 +6,8 @@
     "studio": "remotion studio src/index.ts",
     "render:landscape": "remotion render src/index.ts TrueGuard30 out/trueguard-commercial-30s-16x9.mp4",
     "render:vertical": "remotion render src/index.ts TrueGuardVertical15 out/trueguard-commercial-15s-9x16.mp4",
+    "render:impact": "remotion render src/index.ts TrueGuardImpact40 out/trueguard-commercial-impact-40s-16x9.mp4",
+    "still:impact": "remotion still src/index.ts TrueGuardImpactCover out/trueguard-commercial-impact-cover-16x9.png",
     "still": "remotion still src/index.ts TrueGuardPoster out/trueguard-commercial-poster.png"
   },
   "dependencies": {
