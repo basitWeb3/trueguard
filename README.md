@@ -153,6 +153,8 @@ tests/             Domain and API tests
 
 The complete product and acceptance requirements are in [`PRD.md`](./PRD.md). See [`EXECUTION_RESEARCH.md`](./EXECUTION_RESEARCH.md) for the verified venue/chain boundary and [`DEMO_AND_SUBMISSION.md`](./DEMO_AND_SUBMISSION.md) for the 90-second demo.
 
+Commercial stills, a 30-second voiceover, CapCut timeline and Seedance/Higgsfield motion prompts are in [`marketing/COMMERCIAL_PRODUCTION_KIT.md`](./marketing/COMMERCIAL_PRODUCTION_KIT.md).
+
 ## Important boundary
 
 TrueGuard explains and verifies product facts. It does not predict prices or claim an investment is safe. ExitTogether does not assume aggregation is always better: production must compare a firm batch quote with the holder's alternative after every fee, then execute only inside each signed limit. The displayed savings are declared demo assumptions. `tgSPCX` is not SpaceX equity and is not OKX's SPCXUSD X-Perp.

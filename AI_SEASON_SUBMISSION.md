@@ -16,7 +16,7 @@ https://trueguard-rwa.netlify.app
 
 ### GitHub
 
-Pending public repository URL.
+https://github.com/basitWeb3/trueguard
 
 ### Email
 
@@ -77,7 +77,7 @@ Official submission form: https://docs.google.com/forms/d/e/1FAIpQLSfgU_3zcXdxK0
 - [x] Six contracts are deployed on X Layer testnet.
 - [x] ExitTogether batch `1` is open on X Layer testnet.
 - [x] Production build, TypeScript checks, and 25 tests pass.
-- [ ] Public GitHub repository URL.
+- [x] Public GitHub repository URL.
 - [ ] Dedicated TrueGuard X account.
 - [ ] Launch post from that account mentioning `@XLayerOfficial`.
 - [ ] Team email and Telegram.
