@@ -7,3 +7,6 @@ dist/
 .env.*
 !.env.example
 .netlify/
+marketing/commercial-video/out/qa/
+marketing/commercial-video/out/*qa*
+marketing/commercial-assets/*.aiff

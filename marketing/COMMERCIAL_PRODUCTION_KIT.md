@@ -1,5 +1,15 @@
 # TrueGuard commercial production kit
 
+## Finished motion exports
+
+- Landscape master: `commercial-video/out/trueguard-commercial-30s-16x9.mp4`
+- Vertical social cut: `commercial-video/out/trueguard-commercial-15s-9x16.mp4`
+- Campaign poster: `commercial-video/out/trueguard-commercial-poster.png`
+- Editable motion source: `commercial-video/src/TrueGuardCommercial.tsx`
+- Interactive storyboard: `trueguard_commercial_animation.html`
+
+The finished edit uses animated product screens, moving verification paths, an intent-check walkthrough, an API response, holder bubbles, order rails, a live batch counter, narration, captions and an original procedural sound bed.
+
 ## Campaign idea
 
 **The story. The product. The exit.**

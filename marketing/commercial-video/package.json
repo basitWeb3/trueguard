@@ -1,0 +1,21 @@
+{
+  "name": "trueguard-commercial-video",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render:landscape": "remotion render src/index.ts TrueGuard30 out/trueguard-commercial-30s-16x9.mp4",
+    "render:vertical": "remotion render src/index.ts TrueGuardVertical15 out/trueguard-commercial-15s-9x16.mp4",
+    "still": "remotion still src/index.ts TrueGuardPoster out/trueguard-commercial-poster.png"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.409",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "remotion": "^4.0.409"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.9",
+    "typescript": "^5.9.3"
+  }
+}
