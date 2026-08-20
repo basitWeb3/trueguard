@@ -31,4 +31,12 @@ describe("TrueGuard intent engine", () => {
     expect(check.status).toBe("MATCH");
     expect(check.passed).toContain("Physical redemption exists, subject to terms");
   });
+
+  it("explains an ordinary gold ownership question as gold, not company stock", () => {
+    const result = findProduct("paxg")!;
+    const check = checkIntent("How do I own gold?", result.asset, result.product, at);
+    expect(check.status).toBe("MATCH");
+    expect(check.headline).toContain("allocated physical gold");
+    expect(check.failed).not.toContain("Does not make the holder a shareholder in the company");
+  });
 });

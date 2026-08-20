@@ -39,17 +39,29 @@ const audiences: Array<{ id: AudienceId; label: string; title: string; text: str
 ];
 
 const ecosystemItems = [
-  { name: "X Layer", mark: "XL", logo: "./logos/x-layer.svg", relation: "Settlement network" },
-  { name: "OKX", mark: "OKX", logo: "./logos/okx.svg", relation: "SPCX product source" },
-  { name: "OKX Wallet", mark: "OW", logo: "./logos/okx-wallet.svg", relation: "Wallet target" },
-  { name: "OKX OnchainOS", mark: "OS", logo: "./logos/okx-onchainos.svg", relation: "Quote adapter ready" },
-  { name: "SpaceX", mark: "SX", logo: "./logos/spacex.svg", relation: "Asset explained" },
-  { name: "Tesla", mark: "T", logo: "./logos/tesla.svg", relation: "Asset explained" },
-  { name: "Backed xStocks", mark: "xS", logo: "./logos/backed-xstocks.svg", relation: "TSLAx product source" },
-  { name: "Paxos", mark: "PX", logo: "./logos/paxos.svg", relation: "PAXG issuer source" },
-  { name: "PAX Gold", mark: "PG", logo: "./logos/pax-gold.svg", relation: "Asset explained" },
-  { name: "Chainlink", mark: "CL", logo: "./logos/chainlink.svg", relation: "Data integration target" },
+  { name: "X Layer", mark: "XL", logo: "/logos/x-layer.svg", relation: "Settlement network" },
+  { name: "OKX", mark: "OKX", logo: "/logos/okx.svg", relation: "SPCX product source" },
+  { name: "OKX Wallet", mark: "OW", logo: "/logos/okx-wallet.svg", relation: "Wallet target" },
+  { name: "OKX OnchainOS", mark: "OS", logo: "/logos/okx-onchainos.svg", relation: "Quote adapter ready" },
+  { name: "SpaceX", mark: "SX", logo: "/logos/spacex.svg", relation: "Asset explained" },
+  { name: "Tesla", mark: "T", logo: "/logos/tesla.svg", relation: "Asset explained" },
+  { name: "Backed xStocks", mark: "xS", logo: "/logos/backed-xstocks.svg", relation: "TSLAx product source" },
+  { name: "Paxos", mark: "PX", logo: "/logos/paxos.png", relation: "PAXG issuer source" },
+  { name: "PAX Gold", mark: "PG", logo: "/logos/pax-gold.png", relation: "Asset explained" },
+  { name: "Chainlink", mark: "CL", logo: "/logos/chainlink.svg", relation: "Data integration target" },
 ] as const;
+
+function assetIdFromQuestion(question: string) {
+  const text = question.toLowerCase();
+  if (/\b(gold|paxg|bullion|gold bar|precious metal)\b/.test(text)) return "gold";
+  if (/\b(tesla|tsla|tslax|electric car|ev stock)\b/.test(text)) return "tesla";
+  if (/\b(spacex|spcx|starlink|rocket company)\b/.test(text)) return "spacex";
+  return undefined;
+}
+
+function BrandMark({ className = "brand-mark" }: { className?: string }) {
+  return <span className={className}><img src="/brand/trueguard-mark.png" alt="" /></span>;
+}
 
 function AudienceDiagram({ id }: { id: AudienceId }) {
   if (id === "holders") return <div className="audience-diagram holder-diagram" aria-label="Small holder orders joining one larger exit"><div className="small-orders"><span>$180</span><span>$420</span><span>$760</span><span>$1.2k</span></div><i /><div className="tg-node"><b>T</b><small>EXIT<br />TOGETHER</small></div><i /><div className="block-order"><span>ONE BATCH</span><strong>$50K</strong><small>block quote</small></div></div>;
@@ -105,6 +117,15 @@ function App() {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem("trueguard-theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    const detectedAssetId = assetIdFromQuestion(intent);
+    if (detectedAssetId && detectedAssetId !== assetId) {
+      setAssetId(detectedAssetId);
+      setActiveLayer("live");
+      setBatchPreviewed(false);
+    }
+  }, [intent, assetId]);
 
   useEffect(() => {
     let lastY = window.scrollY;
@@ -321,7 +342,7 @@ function App() {
     <main>
       <header className={`site-header ${headerScrolled ? "is-scrolled" : ""} ${headerHidden ? "is-hidden" : ""} ${mobileMenuOpen ? "is-menu-open" : ""}`}>
         <button className="mobile-menu-trigger" type="button" aria-label={mobileMenuOpen ? "Close menu" : "Open menu"} aria-expanded={mobileMenuOpen} aria-controls="mobile-navigation" onClick={() => setMobileMenuOpen((open) => !open)}><span /><span /><span /></button>
-        <a className="brand" href="#top" aria-label="TrueGuard home"><span className="brand-mark">T</span><span>TrueGuard</span></a>
+        <a className="brand" href="#top" aria-label="TrueGuard home"><BrandMark /><span>TrueGuard</span></a>
         <nav aria-label="Main navigation"><a href="#understand">Understand</a><a href="#check">Verify</a><a href="#exit">Exit</a><a href="#developers">Developers</a></nav>
         <div className="header-actions">
           <button className="theme-toggle" type="button" onClick={() => setTheme(theme === "light" ? "dark" : "light")} aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}><span className="sun">☼</span><span className="moon">◐</span></button>
@@ -369,7 +390,7 @@ function App() {
         <div className="truth-flow">
           <div className="flow-input"><span>USER OR AGENT ASKS</span><strong>“Can I own SpaceX?”</strong><small>Plain language in</small></div>
           <div className="flow-line"><i /><i /><i /></div>
-          <div className="flow-core"><span className="brand-mark">T</span><strong>TrueGuard</strong><small>research pack v1</small></div>
+          <div className="flow-core"><BrandMark /><strong>TrueGuard</strong><small>research pack v1</small></div>
           <div className="flow-answers">
             <article><span>01</span><strong>Real asset</strong><small>What exists today</small></article>
             <article><span>02</span><strong>Exact rights</strong><small>What the token gives you</small></article>
@@ -438,6 +459,7 @@ function App() {
         <div className="truth-copy" data-reveal>
           <p className="eyebrow">TrueGuard Verify</p><h2>Ask what you wish you know. We check what the product gives you in seconds.</h2><p>This is not an AI opinion. The result comes from fixed product-rights rules linked to current evidence.</p>
           <label className="intent-box"><span>WHAT DO YOU WANT?</span><input value={intent} onChange={(event) => setIntent(event.target.value)} aria-label="Describe what you want to buy" /></label>
+          <p className="question-context"><span />Checking {asset.name} · {product.symbol}</p>
           <div className={`match-result ${intentResult.status.toLowerCase()}`}><span className="match-icon">{intentResult.status === "MATCH" ? "✓" : intentResult.status === "MISMATCH" ? "i" : "~"}</span><div><em>{intentResult.status === "MISMATCH" ? "Important difference" : intentResult.status.replace("_", " ")}</em><strong>{intentResult.headline}</strong><p>{intentResult.explanation}</p></div></div>
           <div className="check-details">{intentResult.failed.map((item) => <p className="failed" key={item}><span>×</span>{item}</p>)}{intentResult.passed.map((item) => <p className="passed" key={item}><span>✓</span>{item}</p>)}{intentResult.warnings.map((item) => <p className="warning" key={item}><span>!</span>{item}</p>)}</div>
           <button className="machine-toggle" type="button" onClick={() => setShowMachineView((value) => !value)}>{showMachineView ? "Hide agent response" : "See what an AI agent receives"}<span>→</span></button>
@@ -507,7 +529,7 @@ function App() {
 
       <section className="final-cta"><div><span>Built on X Layer</span><h2>{copy.finalTitle}</h2><p>{copy.finalBody}</p></div><a className="button primary" href="#developers">Install TrueGuard <span>↗</span></a></section>
 
-      <footer><div className="brand"><span className="brand-mark">T</span><span>TrueGuard</span></div><p>The RWA understanding layer for people, products and AI agents.</p><span>Research is not investment advice.</span></footer>
+      <footer><div className="brand"><BrandMark /><span>TrueGuard</span></div><p>The RWA understanding layer for people, products and AI agents.</p><span>Research is not investment advice.</span></footer>
       <EvidenceDrawer evidence={selectedEvidence} onClose={closeEvidence} />
     </main>
   );
