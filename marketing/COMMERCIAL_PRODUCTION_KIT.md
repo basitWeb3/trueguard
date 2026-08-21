@@ -34,7 +34,7 @@ The commercial should make three ideas clear without explaining blockchain jargo
 | 0:12–0:17 | Insert a screen recording of TrueGuard search, the reality layers and the intent answer. | `ONE QUESTION. ONE PROOF-LINKED ANSWER.` | UI clicks only; keep the voice clear. |
 | 0:17–0:23 | Use `exittogether-batch-flow-16x9.png`; small capsules move into the common batch. | `SMALL SELLERS. ONE LARGE ORDER.` | Five soft pulses merge into one deeper pulse. |
 | 0:23–0:27 | Insert the live batch UI and X Layer explorer transaction. | `EACH HOLDER KEEPS A MINIMUM.` | Subtle confirmation sound; no “guaranteed savings” claim. |
-| 0:27–0:30 | Fade to the center of `trueguard-commercial-vertical-9x16.png` or a clean TrueGuard wordmark frame. | `UNDERSTAND IT. VERIFY IT. EXIT TOGETHER.` `trueguard-rwa.netlify.app` | End on one precise emerald tone. |
+| 0:27–0:30 | Fade to the center of `trueguard-commercial-vertical-9x16.png` or a clean TrueGuard wordmark frame. | `UNDERSTAND IT. VERIFY IT. EXIT TOGETHER.` `trueguard.app` | End on one precise emerald tone. |
 
 ## CapCut visual settings
 
@@ -101,7 +101,7 @@ AI video should provide the hook and transitions. The proof must come from the r
 4. Show the public agent/API response briefly.
 5. Show the live ExitTogether batch at `37,250 / 50,000`.
 6. Connect the wallet and show the X Layer testnet transaction.
-7. End on `https://trueguard-rwa.netlify.app`.
+7. End on `https://trueguard.app`.
 
 ## Accuracy guardrails
 

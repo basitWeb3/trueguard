@@ -57,8 +57,8 @@ pnpm --dir /Users/basit_web3/trueguard api
 
 The web app runs at `http://localhost:5173`. The API runs at `http://localhost:8787`, and its OpenAPI document is at `http://localhost:8787/openapi.json`.
 
-Production frontend and API: [`https://trueguard-rwa.netlify.app`](https://trueguard-rwa.netlify.app)  
-Production OpenAPI document: [`https://trueguard-rwa.netlify.app/openapi.json`](https://trueguard-rwa.netlify.app/openapi.json)
+Production frontend and API: [`https://trueguard.app`](https://trueguard.app)
+Production OpenAPI document: [`https://trueguard.app/openapi.json`](https://trueguard.app/openapi.json)
 
 ## API examples
 

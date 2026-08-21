@@ -12,7 +12,7 @@ TrueGuard is the AI-RWA understanding and exit layer on X Layer. It shows people
 
 ### Project URL
 
-https://trueguard-rwa.netlify.app
+https://trueguard.app
 
 ### GitHub
 
@@ -42,17 +42,17 @@ TrueGuard explains the real asset, checks token rights, catches intent mismatche
 
 Built for the @XLayerOfficial AI Season.
 
-Live demo: https://trueguard-rwa.netlify.app
+Live demo: https://trueguard.app
 
 #BuildX #XLayer #RWA #AI
 
 ## Live proof
 
-- Product: https://trueguard-rwa.netlify.app
-- API health: https://trueguard-rwa.netlify.app/health
-- OpenAPI: https://trueguard-rwa.netlify.app/openapi.json
-- X Layer deployment: https://trueguard-rwa.netlify.app/v1/exit-together/deployment
-- Live batch: https://trueguard-rwa.netlify.app/v1/exit-together/onchain/1
+- Product: https://trueguard.app
+- API health: https://trueguard.app/health
+- OpenAPI: https://trueguard.app/openapi.json
+- X Layer deployment: https://trueguard.app/v1/exit-together/deployment
+- Live batch: https://trueguard.app/v1/exit-together/onchain/1
 - Coordinator: https://www.okx.com/web3/explorer/xlayer-test/address/0xc188009320233ec072853b99774ee32912430f70
 
 ## Verified official rules
@@ -85,7 +85,7 @@ Official submission form: https://docs.google.com/forms/d/e/1FAIpQLSfgU_3zcXdxK0
 
 ## Domain status checked August 20, 2026
 
-- Live now: `trueguard-rwa.netlify.app`.
+- Live now: `trueguard.app`.
 - Registered: `trueguard.com`, `trueguard.ai`, `trueguard.xyz`.
 - No registry record found: `trueguard.app`, `trueguard.dev`, `trueguard.finance`, `trueguard.network`, `trueguard.tools`, `trytrueguard.xyz`.
 - The ENS registry currently returns no owner for `trueguard.eth`.

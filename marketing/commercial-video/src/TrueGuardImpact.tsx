@@ -709,7 +709,7 @@ const EndScene: React.FC<{ duration: number }> = ({ duration }) => {
           {finalBeat ? <>Understand it. Verify it.<br /><span style={{ color: C.mint }}>Exit together.</span></> : <>Know what you own.<br /><span style={{ color: C.mint }}>Protect how you exit.</span></>}
         </div>
         <div style={{ color: C.muted, font: `560 20px ${sans}`, marginTop: 28 }}>The RWA understanding layer for people, products and AI agents.</div>
-        <div style={{ color: C.mint, font: `760 15px ${mono}`, marginTop: 30, letterSpacing: ".06em" }}>trueguard-rwa.netlify.app</div>
+        <div style={{ color: C.mint, font: `760 15px ${mono}`, marginTop: 30, letterSpacing: ".06em" }}>trueguard.app</div>
       </div>
       <div style={{ position: "absolute", bottom: 30, color: "rgba(255,255,255,.45)", font: `520 12px ${sans}` }}>Research is not investment advice.</div>
       <ImpactNoise />

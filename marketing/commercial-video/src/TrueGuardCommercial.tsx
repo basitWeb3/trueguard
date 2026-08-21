@@ -689,7 +689,7 @@ const EndScene: React.FC<{ duration: number; vertical?: boolean }> = ({ duration
           The RWA understanding layer for people, products and AI agents.
         </Body>
         <div style={{ marginTop: 34, font: `750 ${vertical ? 22 : 17}px ${mono}`, color: C.green, letterSpacing: ".05em" }}>
-          trueguard-rwa.netlify.app
+          trueguard.app
         </div>
         <div style={{ marginTop: 28, font: `500 ${vertical ? 17 : 13}px ${sans}`, color: C.muted }}>
           Research is not investment advice.
@@ -810,7 +810,7 @@ export const TrueGuardPoster: React.FC = () => (
       <Eyebrow>The RWA understanding layer</Eyebrow>
       <Headline size={104} maxWidth={1050}>The story.<br />The product.<br /><span style={{ color: C.green }}>The exit.</span></Headline>
       <Body maxWidth={800}>Understand the real asset. Verify the token. Exit together.</Body>
-      <div style={{ marginTop: 42, font: `750 17px ${mono}`, color: C.green }}>trueguard-rwa.netlify.app</div>
+      <div style={{ marginTop: 42, font: `750 17px ${mono}`, color: C.green }}>trueguard.app</div>
     </div>
     <div style={{ position: "absolute", right: 90, top: 150, width: 620, height: 780, borderRadius: 42, overflow: "hidden", boxShadow: "0 38px 120px rgba(17,23,19,.22)" }}>
       <Img src={staticFile("trueguard-commercial-vertical-9x16.png")} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
