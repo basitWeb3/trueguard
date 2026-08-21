@@ -342,7 +342,7 @@ function App() {
     <main>
       <header className={`site-header ${headerScrolled ? "is-scrolled" : ""} ${headerHidden ? "is-hidden" : ""} ${mobileMenuOpen ? "is-menu-open" : ""}`}>
         <button className="mobile-menu-trigger" type="button" aria-label={mobileMenuOpen ? "Close menu" : "Open menu"} aria-expanded={mobileMenuOpen} aria-controls="mobile-navigation" onClick={() => setMobileMenuOpen((open) => !open)}><span /><span /><span /></button>
-        <a className="brand" href="#top" aria-label="TrueGuard home"><BrandMark /><span>TrueGuard</span></a>
+        <a className="brand" href="/" aria-label="TrueGuard home"><BrandMark /><span>TrueGuard</span></a>
         <nav aria-label="Main navigation"><a href="#understand">Understand</a><a href="#check">Verify</a><a href="#exit">Exit</a><a href="#developers">Developers</a></nav>
         <div className="header-actions">
           <button className="theme-toggle" type="button" onClick={() => setTheme(theme === "light" ? "dark" : "light")} aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}><span className="sun">☼</span><span className="moon">◐</span></button>
